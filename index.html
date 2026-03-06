@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAPPY BIRTHDAY MUSTI JI ❤️</title>
+    <style>
+        :root {
+            /* The new Love-Hearted Color Palette */
+            --velvet-red: #8e0000;
+            --rose-pink: #ffc0cb;
+            --blush: #ffb6c1;
+            --soft-cream: #fffaf0;
+            --dark-romance: #1a0105;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Georgia', serif; /* Softer, romantic font */
+            background: radial-gradient(circle at center, #2d0108 0%, #1a0105 100%);
+            color: var(--soft-cream);
+            overflow-x: hidden;
+        }
+
+        /* Continuous Animations Layer */
+        #animations-layer {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10; /* Set above background but behind text/content */
+            pointer-events: none; /* Allows interaction through them */
+        }
+
+        .scene {
+            display: none;
+            min-height: 100vh;
+            width: 100vw;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 20; /* Ensures content is always visible above animations */
+        }
+
+        .scene.active { display: flex; animation: fadeIn 2s ease-in-out; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+        /* Banner Text */
+        .bday-banner {
+            font-size: 3rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 0 10px var(--rose-pink), 0 0 20px var(--velvet-red);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            font-family: 'Times New Roman', serif;
+        }
+
+        /* Countdown Styling - Blush Pink & Cream */
+        .timer-container {
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        .timer-box {
+            background: rgba(255, 192, 203, 0.15); /* Blush pink glass */
+            border: 1px solid var(--blush);
+            padding: 10px;
+            border-radius: 8px;
+            min-width: 60px;
+            box-shadow: 0 0 10px rgba(255, 182, 193, 0.3);
+        }
+
+        .timer-num { font-size: 1.8rem; font-weight: bold; color: white; display: block; text-shadow: 1px 1px 2px var(--velvet-red); }
+        .timer-label { font-size: 0.8rem; text-transform: uppercase; color: var(--blush); }
+
+        /* Gallery - Softened Corners & Borders */
+        .photo-gallery {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            width: 90%;
+            padding: 30px 0;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+        .photo-gallery::-webkit-scrollbar { display: none; }
+
+        .bday-photo {
+            min-width: 260px;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 20px; /* Softer, rounder corners */
+            border: 4px solid white; /* Classic portrait border */
+            scroll-snap-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            transition: transform 0.3s;
+        }
+        .bday-photo:hover { transform: scale(1.05); border-color: var(--blush); }
+
+        /* Gift Buttons - Heart Shaped Appearance */
+        .gift-grid {
+            display: flex;
+            gap: 25px;
+            margin: 20px 0;
+        }
+        .gift-btn {
+            background: var(--glass);
+            border: 1px solid var(--blush);
+            padding: 20px;
+            border-radius: 50% 50% 10px 10px; /* Heart-ish shape */
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1.8rem;
+            box-shadow: 0 0 15px rgba(255, 182, 193, 0.2);
+        }
+        .gift-btn:hover { background: var(--velvet-red); transform: translateY(-5px) scale(1.1); border-color: white;}
+
+        #shayari-box {
+            height: 80px;
+            font-style: italic;
+            color: var(--rose-pink);
+            font-size: 1.2rem;
+            text-shadow: 1px 1px 2px black;
+            max-width: 80%;
+        }
+
+        /* Letter Box - Velvet Red background */
+        .letter-content {
+            background: rgba(26, 1, 5, 0.9); /* Dark Velvet */
+            border: 2px solid var(--velvet-red);
+            padding: 35px;
+            border-radius: 15px;
+            max-width: 650px;
+            max-height: 55vh;
+            overflow-y: auto;
+            text-align: left;
+            line-height: 1.9;
+            font-size: 1.15rem;
+            white-space: pre-wrap;
+            color: var(--soft-cream);
+            box-shadow: 0 0 40px rgba(142, 0, 0, 0.5);
+        }
+
+        /* Romantic Button - Pink to Red Gradient */
+        .btn {
+            background: linear-gradient(to right, #ff9a9e 0%, #ff8fa3 100%); /* Pink gradient */
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 30px;
+            margin-top: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
+            transition: 0.3s;
+        }
+        .btn:hover { background: linear-gradient(to right, #ff0844 0%, #ffb199 100%); transform: scale(1.05); }
+
+        /* Animation Keyframes for Petals and Hearts */
+        @keyframes fallPetal {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="animations-layer"></div>
+
+    <audio id="bg-music" loop>
+        <source src="O Mere Dil Ke Chain - (Raag.Fm).mp3" type="audio/mpeg">
+    </audio>
+
+    <section id="scene-1" class="scene active">
+        <div class="bday-banner">HAPPY BIRTHDAY MUSTI JI</div>
+        
+        <div class="timer-container" id="countdown">
+            <div class="timer-box"><span class="timer-num" id="days">00</span><span class="timer-label">Days</span></div>
+            <div class="timer-box"><span class="timer-num" id="hours">00</span><span class="timer-label">Hrs</span></div>
+            <div class="timer-box"><span class="timer-num" id="mins">00</span><span class="timer-label">Min</span></div>
+            <div class="timer-box"><span class="timer-num" id="secs">00</span><span class="timer-label">Sec</span></div>
+        </div>
+
+        <div class="photo-gallery">
+            <img src="photo1.jpg" class="bday-photo" alt="Musti Ji Photo 1">
+            <img src="photo2.jpg" class="bday-photo" alt="Musti Ji Photo 2">
+            <img src="photo3.jpg" class="bday-photo" alt="Musti Ji Photo 3">
+            <img src="photo4.jpg" class="bday-photo" alt="Musti Ji Photo 4">
+            <img src="photo5.jpg" class="bday-photo" alt="Musti Ji Photo 5">
+            <img src="photo6.jpg" class="bday-photo" alt="Musti Ji Photo 6">
+            <img src="photo7.jpg" class="bday-photo" alt="Musti Ji Photo 7">
+            <img src="photo8.jpg" class="bday-photo" alt="Musti Ji Photo 8">
+        </div>
+        
+        <button class="btn" onclick="startFlow()">Enter Your Celebration ❤️</button>
+    </section>
+
+    <section id="scene-2" class="scene">
+        <h2 style="color: white; text-shadow: 0 0 10px var(--blush); font-family: 'Times New Roman', serif; font-size: 2.5rem;">Gifts for My Pasandida Aurat</h2>
+        <div class="gift-grid">
+            <div class="gift-btn" onclick="sayIt(0)">💝</div>
+            <div class="gift-btn" onclick="sayIt(1)">💝</div>
+            <div class="gift-btn" onclick="sayIt(2)">💝</div>
+            <div class="gift-btn" onclick="sayIt(3)">💝</div>
+        </div>
+        <div id="shayari-box">Click a heart, Musti Ji...</div>
+        <button class="btn" onclick="next(3)">The Best Wish for my life ✨</button>
+    </section>
+
+    <section id="scene-3" class="scene">
+        <h2 style="color: var(--rose-pink); text-shadow: 1px 1px 3px black; font-family: 'Times New Roman', serif;">Dil Ki Feeling...</h2>
+        <div class="letter-content" id="letter-body"></div>
+        <button class="btn" onclick="next(1)">Back to Start ❤️</button>
+    </section>
+
+    <script>
+        // Set the Birthday Date (Update this to her actual birthday!)
+        const bdayDate = new Date("March 16, 2026 00:00:00").getTime();
+
+        const timer = setInterval(() => {
+            const now = new Date().getTime();
+            const diff = bdayDate - now;
+
+            if (diff > 0) {
+                document.getElementById('days').innerText = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+                document.getElementById('hours').innerText = String(Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+                document.getElementById('mins').innerText = String(Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+                document.getElementById('secs').innerText = String(Math.floor((diff % (1000 * 60)) / 1000)).padStart(2, '0');
+            } else {
+                document.getElementById('countdown').innerHTML = "<h2 style='color:white; text-shadow: 0 0 10px var(--blush);'>IT'S YOUR DAY! 🎂 ❤️</h2>";
+                clearInterval(timer);
+            }
+        }, 1000);
+
+        const music = document.getElementById('bg-music');
+        const shayaris = [
+            "Teri aankhon mein dikhta hai saara jahan,\nMusti Ji, tum jaisa koi nahi yahan! 🌹",
+            "Zindagi ke har mod par tera saath ho,\nBas itni si khwaish hai ki tera haath mere haath mein ho. ❤️",
+            "Phoolon ki mehak bhi pheeki lagti hai,\nJab tum muskura kar samne aati ho! ✨",
+            "Har din tumhara ho, har raat suhani ho,\nTumhari har dua qubool ho, aisi meri kahani ho! 🎂"
+        ];
+
+        function startFlow() {
+            music.play();
+            next(2);
+        }
+
+        function next(num) {
+            document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+            document.getElementById(`scene-${num}`).classList.add('active');
+            if(num === 3) typeLetter();
+        }
+
+        function sayIt(i) {
+            const box = document.getElementById('shayari-box');
+            box.style.opacity = 0;
+            setTimeout(() => {
+                box.innerText = shayaris[i];
+                box.style.opacity = 1;
+            }, 300);
+        }
+
+        function typeLetter() {
+            const text = `Dearest Musti Ji,\n\nHappy Birthday! Today is not just another day; it is the celebration of the most incredible person I know. I sat down to write how I feel, and honestly, even a thousand lines wouldn't be enough, but here is my heart poured out for you.\n\nFrom the moment you entered my life, you brought a light that I never knew existed. Your name "Musti Ji" itself brings a smile to my face, reminding me of all the fun, the laughter, and the beautiful chaos we share. You are my anchor when the storm is high and my sunshine when the clouds are grey.\n\nI want you to know that I cherish every little thing about you—the way you laugh at the smallest jokes, the way you care for people, and the way you make the world a better place just by being in it.\n\nAs you blow out your candles today, I want you to know that my biggest wish has already come true: I have you. I promise to stand by you, to support your dreams, no matter how big or small.\n\nWith all my love, forever and always,\nHappy Birthday, my Musti Ji! ❤️✨`;
+            let j = 0;
+            const el = document.getElementById('letter-body');
+            el.innerHTML = "";
+            
+            // Clear existing intervals if returning to start
+            if (window.typeInterval) clearInterval(window.typeInterval);
+
+            window.typeInterval = setInterval(() => {
+                if(j < text.length) {
+                    el.innerHTML += text.charAt(j);
+                    j++;
+                    el.scrollTop = el.scrollHeight; // Auto-scrolls as it types
+                } else {
+                    clearInterval(window.typeInterval);
+                }
+            }, 40);
+        }
+
+        // --- NEW ANIMATION SCRIPT ---
+
+        function createPetal() {
+            const container = document.getElementById('animations-layer');
+            const petal = document.createElement('div');
+            
+            // Create a simple petal shape using CSS
+            petal.style.width = Math.random() * 10 + 10 + 'px';
+            petal.style.height = petal.style.width;
+            petal.style.background = `rgba(210, 4, 45, ${Math.random() * 0.5 + 0.5})`; // Crimson red range
+            petal.style.borderRadius = '0px 15px 0px 15px'; // Petal shape
+            
+            petal.style.position = 'fixed';
+            petal.style.top = '-5vh';
+            petal.style.left = Math.random() * 100 + 'vw';
+            petal.style.zIndex = '10'; // Keep behind text
+            
+            // Animation properties
+            const duration = Math.random() * 5 + 5 + 's'; // 5-10s
+            petal.style.animation = `fallPetal ${duration} linear forwards`;
+            
+            container.appendChild(petal);
+            
+            // Remove from DOM after animation finishes
+            setTimeout(() => petal.remove(), parseFloat(duration) * 1000);
+        }
+
+        function createFloatingHeart() {
+            const container = document.getElementById('animations-layer');
+            const heart = document.createElement('div');
+            heart.innerHTML = Math.random() > 0.5 ? '❤️' : '💖'; // Varied hearts
+            
+            heart.style.position = 'fixed';
+            heart.style.top = '100vh'; // Start off screen bottom
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * 15 + 10 + 'px';
+            heart.style.zIndex = '10'; // Keep behind text
+            
+            // Animation properties
+            const duration = Math.random() * 4 + 4 + 's'; // 4-8s
+            heart.style.animation = `floatHeart ${duration} ease-out forwards`;
+            
+            container.appendChild(heart);
+            
+            // Remove from DOM after animation finishes
+            setTimeout(() => heart.remove(), parseFloat(duration) * 1000);
+        }
+
+        // Spawn animations continuously
+        setInterval(createPetal, 150); // Falling petals from top
+        setInterval(createFloatingHeart, 400); // Floating hearts from bottom
+
+    </script>
+</body>
+</html>
